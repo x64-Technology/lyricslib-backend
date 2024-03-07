@@ -1,9 +1,20 @@
 from rest_framework.response import Response
-from .serializer import SongLyricsSerializer, SearchSongLyricsSerializer
-from .models import SongLyrics
+from .serializer import SongLyricsSerializer, SearchSongLyricsSerializer, SongForHome, SongCollectionSerializerPart
+from .models import SongLyric, SongCollection
 from rest_framework.decorators import api_view
 from rest_framework import status
 from django.db.models import Q 
+
+@api_view()
+def home_view(request):
+    context = {}
+    latest_songs = SongLyric.objects.order_by("publish")[:10]
+    coll = SongCollection.objects.all()[:4]
+
+    context["latest_songs"] = SongForHome(latest_songs, many=True).data
+    context["collections"] = SongCollectionSerializerPart(coll, many=True).data
+
+    return Response(data=context)
 
 @api_view(["POST"])
 def create_song(request):
@@ -15,14 +26,15 @@ def create_song(request):
 
 @api_view(["GET"])
 def get_all_song(request):
-    query = SongLyrics.objects.all()
+    query = SongLyric.objects.all()
+    print(query)
     ser = SongLyricsSerializer(query, many=True)
     return Response(data=ser.data, status=status.HTTP_200_OK)
 
 @api_view(["GET"])
 def get_song(request, id:int):
     try:
-        query = SongLyrics.objects.get(id=id)
+        query = SongLyric.objects.get(id=id)
         ser = SongLyricsSerializer(query)
         return Response(data=ser.data, status=status.HTTP_200_OK)
     except Exception as e:
@@ -32,7 +44,7 @@ def get_song(request, id:int):
 def search_song(request):
     search_query = request.GET.get('query')
     if search_query :
-        query = SongLyrics.objects.filter(
+        query = SongLyric.objects.filter(
             Q(name__icontains=search_query) |
             Q(album__icontains=search_query) |
             Q(singer__icontains=search_query) |

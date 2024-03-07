@@ -1,9 +1,8 @@
 from rest_framework.response import Response
-from .serializer import SongCollectionSerializer
-from .models import SongCollection, SongLyrics
+from .serializer import SongCollectionSerializer, SongCollectionSerializerPart, SongForHome
+from .models import SongCollection, SongLyric
 from rest_framework.decorators import api_view
 from rest_framework import status
-from django.db.models import Q 
 
 @api_view(["POST"])
 def create_collection(request):
@@ -15,14 +14,26 @@ def create_collection(request):
 @api_view(["GET"])
 def get_collections(request):
     query = SongCollection.objects.all()
-    ser = SongCollectionSerializer(query, many=True)
+    ser = SongCollectionSerializerPart(query, many=True)
     return Response(data=ser.data)
 
+@api_view(["GET"])
+def get_collection(request, id:int):
+    try:
+        query = SongCollection.objects.get(id=id)
+        context = SongCollectionSerializer(query).data
+
+        songs = SongLyric.objects.filter(id__in=context["songs"])
+        context["songs"] = SongForHome(songs, many=True).data
+        return Response(data=context)
+    except Exception as e:
+        return Response(data={"message":str(e)}, status=status.HTTP_404_NOT_FOUND)
+    
 @api_view(["PUT"])
 def add_songs(request):
     coll_id = request.data["id"]
     songs = request.data["songs"]
-    songs_q = SongLyrics.objects.filter(name__in=songs)
+    songs_q = SongLyric.objects.filter(name__in=songs)
 
     try:
         coll = SongCollection.objects.get(id=coll_id)
