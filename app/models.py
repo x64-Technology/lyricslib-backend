@@ -7,7 +7,10 @@ class SongLyric(models.Model):
     album = models.CharField(max_length=40)
     singer = models.CharField(max_length=40)
     writer = models.CharField(max_length=40)
-    image = models.ImageField(upload_to="public/songs")
+    music = models.CharField(max_length=40)
+    slug = models.CharField(max_length=80)
+    title = models.CharField(max_length=80)
+    image = models.ImageField(upload_to="songs")
     publish = models.DateField()
     lyrics = models.TextField()
 
@@ -17,8 +20,8 @@ class SongLyric(models.Model):
 class SongCollection(models.Model):
     title = models.CharField(max_length=40)
     description = models.TextField(null=True, blank=True)
-    songs = models.ManyToManyField(SongLyric)
-    image = models.ImageField(upload_to="public/collections")
+    songs = models.ManyToManyField(SongLyric, null=True, blank=True)
+    image = models.ImageField(upload_to="collections")
 
     def __str__(self):
         return self.title

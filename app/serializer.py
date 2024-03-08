@@ -11,7 +11,7 @@ class SongLyricsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SongLyric
-        fields = ['id', 'name', 'album', 'singer', 'writer', 'image', 'lyrics']
+        fields = "__all__"
 
 class SearchSongLyricsSerializer(serializers.ModelSerializer):
     

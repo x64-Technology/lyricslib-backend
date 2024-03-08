@@ -7,9 +7,12 @@ from rest_framework import status
 @api_view(["POST"])
 def create_collection(request):
     ser = SongCollectionSerializer(data=request.data)
-    if ser.is_valid():
-        return Response(data={"message":"collection created"})
-    return Response(data={"message":"failed to create collection"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    try:
+        if ser.is_valid(raise_exception=True):
+            ser.save()
+            return Response(data={"message":"collection created"})
+    except Exception as e:
+        return Response(data={"message":str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(["GET"])
 def get_collections(request):
