@@ -3,3 +3,4 @@ migrations
 env
 public
 *.sqlite3
+static
