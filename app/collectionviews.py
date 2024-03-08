@@ -23,7 +23,7 @@ def get_collection(request, id:int):
         query = SongCollection.objects.get(id=id)
         context = SongCollectionSerializer(query).data
 
-        songs = SongLyric.objects.filter(id__in=context["songs"])
+        songs = SongLyric.objects.filter(songcollection__id=id)
         context["songs"] = SongForHome(songs, many=True).data
         return Response(data=context)
     except Exception as e:
