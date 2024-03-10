@@ -1,9 +1,8 @@
 from rest_framework.response import Response
-from .serializer import SongLyricsSerializer, SongForHome, SongCollectionSerializerPart
-from .models import SongLyric, SongCollection
+from .serializer import SongLyricsSerializer, SongForHome
+from .models import SongLyric
 from rest_framework.decorators import api_view
 from rest_framework import status
-from django.db.models import Q 
 from datetime import datetime
 
 @api_view(["POST"])
