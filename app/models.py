@@ -20,7 +20,7 @@ class SongLyric(models.Model):
 class SongCollection(models.Model):
     title = models.CharField(max_length=40)
     description = models.TextField(null=True, blank=True)
-    songs = models.ManyToManyField(SongLyric, null=True, blank=True)
+    songs = models.ManyToManyField(SongLyric, blank=True)
     image = models.ImageField(upload_to="collections")
 
     def __str__(self):
