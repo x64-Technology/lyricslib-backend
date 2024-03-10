@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<title>Lyrics Library</title>
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container">
+        <section class="Songs">
+            <div class="row row-cols-1 row-cols-md-2">
+                <div class="col">
+                    <h2 class="mb-4 mt-4">Latest Songs</h2>
+                    <ul class="list-group list-group-light">
+                        {% for song in songs %}
+                        <li class="list-group-item border-0">
+                            <div class="d-flex align-items-center">
+                                <a href="#">
+                                    <img src="{{song.image}}" class="rounded-6 shadow-1-soft"
+                                        alt="{{song.name}} song lyrics {{song.album}} - {{song.singer}}"
+                                        style="width: 180px; height: 120px" />
+                                </a>
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1"><a href="#">{{song.name}}</a></p>
+                                    <div class="badge badge-primary me-2 mb-2">
+                                        <a href="#">
+                                            {{song.album}}
+                                        </a>
+                                    </div>
+                                    <p class="text-muted">{{song.singer}}</p>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="col">
+                    <h2 class="mb-4 mt-4">Top Collections</h2>
+                    <div class="row row-cols-1 row-cols-md-2 g-3">
+                        {% for coll in collections %}
+                        <div class="col">
+                            <div class="bg-image ripple shadow-4-soft rounded-6 overflow-hiddend-block "
+                                data-ripple-color="light">
+                                <img src="{{coll.image}}" class="w-100" alt="{{coll.title}}" />
+                                <a href="/collection/{{this.title}}">
+                                    <div class="mask">
+                                        <div class="d-flex justify-content-start align-items-end h-100 p-3">
+                                            <span class="badge badge-primary me-2">{{coll.title}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="hover-overlay">
+                                        <div class="mask" style="background-color: hsla(0, 0%, 98.4%, 0.15)"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}
