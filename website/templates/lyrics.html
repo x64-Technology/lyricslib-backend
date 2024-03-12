@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block meta %}
+<meta name="keywords" content="{{lyrics.name}} lyrics, {{lyrics.album}} songs lyrics, {{lyrics.singer}} lyrics">
+{% endblock %}
+
+{% block head %}
+<title>{{lyrics.title}} - Lyrics Library</title>
+<meta name="description" content="{{lyrics.name}} song is sung by {{lyrics.singer}} from album {{lyrics.album}} and lyrics written by {{lyrics.writer}}.">
+{% endblock %}
+
+{% block content %}
+<main class="container">
+    <div class="mb-4 text-center bg-image shadow-4-strong rounded-6 mt-3"
+        style="background-image: url('{{lyrics.image}}'); height: 200px;">
+        <div class="mask" style="background-color: rgba(0, 0, 0, 0.4);">
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="text-white">
+                    <h2 class="mb-3 h2">{{lyrics.name}} song lyrics</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row py-2">
+
+        <section class="col-md-8">
+            <h1 class="py-3 h1">{{lyrics.title}}</h1>
+            <small class="text-muted">Released in : {{lyrics.publish}}</small>
+            <div class="py-3 text-center">
+                {{lyrics.lyrics | safe}}
+            </div>
+        </section>
+
+        <section class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Song Information</h5>
+                    <hr />
+                    <p class="card-text"><strong>Song Name :</strong> {{lyrics.name}}</p>
+                    <p class="card-text"><strong>Album :</strong> {{lyrics.album}}</p>
+                    <p class="card-text"><strong>Music By :</strong> {{lyrics.music}}</p>
+                    <p class="card-text"><strong>Lyrics By :</strong> {{lyrics.writer}}</p>
+                    <p class="card-text"><strong>Singer :</strong> {{lyrics.singer}}</p>
+                </div>
+            </div>
+
+            {% if album_songs %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">More Songs from {{lyrics.album}}</h5>
+                    <ul class="list-group list-group-light">
+                        {% for song in album_songs %}
+                        <a class="list-group-item list-group-item-action px-3 border-0" href="/lyric/{{song.slug}}">
+                            <div>
+                                <div class="fw-bold">{{song.name}}</div>
+                                <div class="text-muted">{{song.singer}}</div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+            {% if singer_songs %}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">More Songs By Singer</h5>
+                    <ul class="list-group list-group-light">
+                        {% for song in singer_songs %}
+                        <a class="list-group-item list-group-item-action px-3 border-0" href="/lyric/{{song.slug}}">
+                            <div>
+                                <div class="fw-bold">{{song.name}}</div>
+                                <div class="text-muted">{{song.album}}</div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        </section>
+    </div>
+</main>
+{% endblock %}

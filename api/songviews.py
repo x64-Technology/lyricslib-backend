@@ -7,8 +7,8 @@ from datetime import datetime
 
 @api_view(["POST"])
 def create_song(request):
-    request.data["title"] = request.data["name"] + " lyrics"
-    request.data["slug"] = request.data["title"].replace(" ", "-")
+    #request.data["title"] = request.data["name"] + " lyrics"
+    #request.data["slug"] = request.data["title"].replace(" ", "-")
     request.data["publish"] = datetime.strptime(request.data["publish"], "%d/%m/%Y").date()
     seri = SongLyricsSerializer(data=request.data)
     try:
