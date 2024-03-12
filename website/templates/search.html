@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>result for {{query}} - Lyrics Library</title>
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container">
+        <section class="search-result">
+            <h2 class="py-4">search result for {{query}}</h2>
+            <div class="card">
+                <ul class="list-group list-group-light py-4">
+                    {% for res in result %}
+                    <li class="list-group-item px-3 list-group-item d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <p class="fw-bold mb-1"><a href="/lyric/{{res.name}}/">{{res.name}}</a></p>
+                                <div class="badge badge-primary me-2 mb-2">
+                                    <a href="/album/{{res.album}}">
+                                        {{res.album}}
+                                    </a>
+                                </div>
+                                <p class="text-muted">{{this.singer}}</p>
+                            </div>
+                        </div>
+                        <img src="{{res.image}}" class="rounded-6" alt="{{this.name}} - {{this.album}}"
+                            style="width: 120px; height: 90px" />
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

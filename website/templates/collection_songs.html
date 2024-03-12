@@ -1,18 +1,22 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-<meta name="keywords" content="{{album}} songs, {{album}} songs lyrics, {{album}} movie songs">
+<meta name="keywords" content="{{collection.title}} songs, {{collection.title}} songs lyrics">
 {% endblock %}
 
 {% block head %}
-<title>Lyrics Library - {{album}} songs</title>
-<meta name="description" content="{{album}} songs lyrics at Lyrics Library">
+<title>{{collection.title}} - Lyrics Library</title>
+<meta name="description" content="{{collection.description}}">
 {% endblock %}
+
 
 {% block content %}
 <main>
     <div class="container">
-        <h1 class="h1 py-4">{{album}} Songs</h1>
+        <div class="py-5">
+            <h1 class="h1">{{collection.title}}</h1>
+            <p>{{collection.dic}}</p>
+        </div>
         <div class="row row-cols-2 row-cols-md-4 g-4">
             {% for song in songs %}
             <div class="col h-100">
@@ -32,6 +36,13 @@
             </div>
             {% endfor %}
         </div>
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center pagination-sm">
+
+                <li class="page-item"><a class="page-link" href="?page="></a></li>
+
+            </ul>
+        </nav>
     </div>
 </main>
 {% endblock %}

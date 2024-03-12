@@ -1,8 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block head %}
-<title>Lyrics Library</title>
-{% endblock %}
 
 {% block content %}
 <main>
@@ -43,7 +39,7 @@
                             <div class="bg-image ripple shadow-4-soft rounded-6 overflow-hiddend-block "
                                 data-ripple-color="light">
                                 <img src="{{coll.image}}" class="w-100" alt="{{coll.title}}" />
-                                <a href="/col/{{this.title}}">
+                                <a href="/coll/{{coll.id}}">
                                     <div class="mask">
                                         <div class="d-flex justify-content-start align-items-end h-100 p-3">
                                             <span class="badge badge-primary me-2">{{coll.title}}</span>
@@ -57,6 +53,24 @@
                         </div>
                         {% endfor %}
                     </div>
+
+                    <h2 class="mb-4 mt-4">Top Albums</h2>
+
+                    <div class="card">
+                        <ul class="list-group list-group-light py-4">
+                            {% for album in albums %}
+                            <li class="list-group-item px-3 list-group-item d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <div class="ms-3">
+                                        <p class="fw-bold mb-1"><a href="/album/{{album.album}}">{{album.album}}</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </section>

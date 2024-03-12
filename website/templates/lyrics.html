@@ -28,7 +28,9 @@
 
         <section class="col-md-8">
             <h1 class="py-3 h1">{{lyrics.title}}</h1>
+            {% if lyrics.publish %}
             <small class="text-muted">Released in : {{lyrics.publish}}</small>
+            {% endif %}
             <div class="py-3 text-center">
                 {{lyrics.lyrics | safe}}
             </div>
