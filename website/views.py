@@ -57,7 +57,7 @@ def search(request):
             Q(writer__icontains=query) |
             Q(music__icontains=query) |
             Q(title__icontains=query) |
-            Q(slug__icontains=query))[:20]
+            Q(slug__icontains=query)).values("name", "album", "slug", "image")[:20]
         
         return render(request=request, template_name="search.html", context={"result":result, "query":query})
     return render(request=request, template_name="search.html", context={"result":query})
